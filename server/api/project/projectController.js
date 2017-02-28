@@ -1,16 +1,15 @@
-var Post = require('./postModel');
+var Project = require('./projectModel');
 var _ = require('lodash');
 var logger = require('../../util/logger');
 
 exports.params = function(req, res, next, id) {
-  Post.findById(id)
-    .populate('author', 'username')
+  Project.findById(id)
     .exec()
-    .then(function(post) {
-      if (!post) {
-        next(new Error('No post with that id'));
+    .then(function(project) {
+      if (!project) {
+        next(new Error('No project with that id'));
       } else {
-        req.post = post;
+        req.project = project;
         next();
       }
     }, function(err) {
@@ -19,29 +18,28 @@ exports.params = function(req, res, next, id) {
 };
 
 exports.get = function(req, res, next) {
-  Post.find({})
-    .populate('author categories')
+  Project.find({})
     .exec()
-    .then(function(posts){
-      res.json(posts);
+    .then(function(projects){
+      res.json(projects);
     }, function(err){
       next(err);
     });
 };
 
 exports.getOne = function(req, res, next) {
-  var post = req.post;
-  res.json(post);
+  var project = req.project;
+  res.json(project);
 };
 
 exports.put = function(req, res, next) {
-  var post = req.post;
+  var project = req.project;
 
   var update = req.body;
 
-  _.merge(post, update);
+  _.merge(project, update);
 
-  post.save(function(err, saved) {
+  project.save(function(err, saved) {
     if (err) {
       next(err);
     } else {
@@ -51,11 +49,11 @@ exports.put = function(req, res, next) {
 };
 
 exports.post = function(req, res, next) {
-  var newpost = req.body;
-  newpost.author = req.user._id;
-  Post.create(newpost)
-    .then(function(post) {
-      res.json(post);
+  var newproject = req.body;
+  newproject.owner = req.user._id;
+  Project.create(newproject)
+    .then(function(project) {
+      res.json(project);
     }, function(err) {
       logger.error(err);
       next(err);
@@ -63,7 +61,7 @@ exports.post = function(req, res, next) {
 };
 
 exports.delete = function(req, res, next) {
-  req.post.remove(function(err, removed) {
+  req.project.remove(function(err, removed) {
     if (err) {
       next(err);
     } else {

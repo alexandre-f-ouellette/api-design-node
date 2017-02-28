@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var logger = require('../../util/logger');
-var controller = require('./postController');
+var controller = require('./projectController');
 var auth = require('../../auth/auth');
 
 var checkUser = [auth.decodeToken(), auth.getFreshUser()];
