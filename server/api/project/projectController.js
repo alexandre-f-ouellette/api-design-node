@@ -49,9 +49,9 @@ exports.put = function(req, res, next) {
 };
 
 exports.post = function(req, res, next) {
-  var newproject = req.body;
-  newproject.owner = req.user._id;
-  Project.create(newproject)
+  var newProject = req.body;
+  newProject.owner = req.user._id;
+  Project.create(newProject)
     .then(function(project) {
       res.json(project);
     }, function(err) {

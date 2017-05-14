@@ -46,9 +46,9 @@ exports.put = function(req, res, next) {
 };
 
 exports.post = function(req, res, next) {
-  var newcategory = req.body;
+  var newCategory = req.body;
 
-  Category.create(newcategory)
+  Category.create(newCategory)
     .then(function(category) {
       res.json(category);
     }, function(err) {
