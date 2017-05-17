@@ -22,7 +22,11 @@ var ProjectSchema = new Schema({
     type: Date
   },
 
-  owner: {type: Schema.Types.ObjectId, ref: 'user'}
+  owner: {type: Schema.Types.ObjectId, ref: 'user'},
+
+  notes: [{type: Schema.Types.ObjectId, ref: 'note'}],
+
+  categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
 });
 
 module.exports = mongoose.model('project', ProjectSchema);
