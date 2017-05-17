@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate')
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
@@ -28,5 +29,7 @@ var ProjectSchema = new Schema({
 
   categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
 });
+
+ProjectSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('project', ProjectSchema);

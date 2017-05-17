@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate')
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
@@ -46,5 +47,6 @@ UserSchema.methods = {
   }
 };
 
+UserSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('user', UserSchema);
