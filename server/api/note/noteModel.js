@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var mongoosePaginate = require('mongoose-paginate')
 var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
@@ -12,11 +11,7 @@ var NoteSchema = new Schema({
     type: String,
   },
 
-  owner: {type: Schema.Types.ObjectId, ref: 'user'},
-
-  categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
+  owner: {type: Schema.Types.ObjectId, ref: 'user'}
 });
-
-NoteSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('note', NoteSchema);
