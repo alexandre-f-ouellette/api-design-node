@@ -6,5 +6,6 @@ router.use('/users', require('./user/userRoutes'));
 router.use('/categories', require('./category/categoryRoutes'));
 router.use('/projects', require('./project/projectRoutes'));
 router.use('/notes', require('./note/noteRoutes'));
+router.use('/todos', require('./todo/todoRoutes'));
 
 module.exports = router;

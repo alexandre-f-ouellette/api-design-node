@@ -2,6 +2,7 @@ var User = require('../api/user/userModel');
 var Project = require('../api/project/projectModel');
 var Category = require('../api/category/categoryModel');
 var Note = require('../api/note/noteModel');
+var Todo = require('../api/todo/todoModel');
 var _ = require('lodash');
 var logger = require('./logger');
 
@@ -29,6 +30,12 @@ var projects = [
   {name: 'Test Project 1', shortName: 'proj1', startDate: new Date(), endDate: new Date(50, 5, 25)},
   {name: 'Test Project 2', shortName: 'proj2', startDate: new Date()},
   {name: 'Test Project 3', shortName: 'proj3'}
+];
+
+var todos = [
+  {body: 'Test Todo 1', dueDate: new Date()},
+  {body: 'Test Todo 2'},
+  {body: 'Test Todo 3'}
 ];
 
 var createDoc = function(model, doc) {
@@ -83,6 +90,17 @@ var createNotes = function(data) {
 };
 
 
+var createTodos = function(data) {
+  var promises = todos.map(function(todo) {
+    return createDoc(Todo, todo);
+  });
+
+  return Promise.all(promises)
+    .then(function(todos) {
+      return _.merge({todos: todos}, data || {});
+    });
+};
+
 var createProjects = function(data) {
 
   var newProjects = projects.map(function(project, i) {
@@ -92,7 +110,7 @@ var createProjects = function(data) {
 
   return Promise.all(newProjects)
     .then(function() {
-      return 'Seeded DB with 3 Projects, 3 Users, 3 Categories and 3 Notes';
+      return 'Seeded DB with 3 Projects, 3 Users, 3 Categories, 3 Todos and 3 Notes';
     });
 };
 
@@ -100,6 +118,7 @@ cleanDB()
   .then(createUsers)
   .then(createCategories)
   .then(createNotes)
+  .then(createTodos)
   .then(createProjects)
   .then(logger.log.bind(logger))
   .catch(logger.log.bind(logger));

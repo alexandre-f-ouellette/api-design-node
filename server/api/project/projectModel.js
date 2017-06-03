@@ -26,6 +26,8 @@ var ProjectSchema = new Schema({
 
   notes: [{type: Schema.Types.ObjectId, ref: 'note'}],
 
+  todos: [{type: Schema.Types.ObjectId, ref: 'todo'}],
+
   categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
 });
 

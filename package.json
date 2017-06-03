@@ -19,6 +19,7 @@
     "jsonwebtoken": "^5.0.4",
     "lodash": "^3.10.0",
     "method-override": "^2.3.4",
+    "mongo-cursor-pagination": "^5.0.0",
     "mongoose": "^4.0.8",
     "morgan": "^1.6.1"
   },
