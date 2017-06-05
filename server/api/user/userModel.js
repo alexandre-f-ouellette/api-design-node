@@ -12,10 +12,7 @@ var UserSchema = new Schema({
   // dont store the password as plain text
   password: {
     type: String,
-    required: true,
-
-    // Prevents password from showing up in populates
-    select: false
+    required: true
   }
 });
 
