@@ -48,7 +48,7 @@ var createDoc = function(model, doc) {
 
 var cleanDB = function() {
   logger.log('... cleaning the DB');
-  var cleanPromises = [User, Category, Project, Note]
+  var cleanPromises = [User, Category, Project, Note, Todo]
     .map(function(model) {
       return model.remove().exec();
     });
