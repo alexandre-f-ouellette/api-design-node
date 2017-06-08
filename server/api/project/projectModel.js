@@ -27,7 +27,8 @@ var ProjectSchema = new Schema({
 
   children: [{
     kind: String,
-    item: { type: ObjectId, refPath: 'children.kind' }
+    item: { type: ObjectId, refPath: 'children.kind' },
+    _id: false
   }]
 });
 

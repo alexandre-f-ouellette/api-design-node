@@ -67,17 +67,6 @@ var createUsers = function(data) {
     });
 };
 
-var createCategories = function(data) {
-  var promises = categories.map(function(category) {
-    return createDoc(Category, category);
-  });
-
-  return Promise.all(promises)
-    .then(function(categories) {
-      return _.merge({categories: categories}, data || {});
-    });
-};
-
 var createNotes = function(data) {
   var promises = notes.map(function(note) {
     return createDoc(Note, note);
@@ -101,10 +90,36 @@ var createTodos = function(data) {
     });
 };
 
-var createProjects = function(data) {
+var createCategories = function(data) {
+  var newCategories = categories.map(function(category, i) {
+    var childrenData = [
+      { kind: 'note', item: data.notes[i]._id },
+      { kind: 'todo', item: data.todos[i]._id }
+    ];
 
+    category.owner = data.users[i]._id;
+    category.children = childrenData;
+
+    return createDoc(Category, category);
+  });
+
+  return Promise.all(newCategories)
+    .then(function(categories) {
+      return _.merge({categories: categories}, data || {});
+    });
+};
+
+var createProjects = function(data) {
   var newProjects = projects.map(function(project, i) {
+    var childrenData = [
+      { kind: 'note', item: data.notes[i]._id },
+      { kind: 'todo', item: data.todos[i]._id },
+      { kind: 'category', item: data.categories[i]._id }
+    ];
+
     project.owner = data.users[i]._id;
+    project.children = childrenData;
+
     return createDoc(Project, project);
   });
 
@@ -116,9 +131,9 @@ var createProjects = function(data) {
 
 cleanDB()
   .then(createUsers)
-  .then(createCategories)
   .then(createNotes)
   .then(createTodos)
+  .then(createCategories)
   .then(createProjects)
   .then(logger.log.bind(logger))
   .catch(logger.log.bind(logger));
