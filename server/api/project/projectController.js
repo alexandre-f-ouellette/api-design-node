@@ -18,8 +18,14 @@ exports.params = function(req, res, next, id) {
 };
 
 exports.get = function(req, res, next) {
-  Project.find({})
-    .exec()
+  Project
+    .paginate({
+      owner: req.user._id
+    },
+    {
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit) || 10
+    })
     .then(function(projects){
       res.json(projects);
     }, function(err){

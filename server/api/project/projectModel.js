@@ -31,4 +31,6 @@ var ProjectSchema = new Schema({
   categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
 });
 
+ProjectSchema.plugin(require('mongoose-paginate'));
+
 module.exports = mongoose.model('project', ProjectSchema);
