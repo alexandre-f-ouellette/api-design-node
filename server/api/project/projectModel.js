@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId
 
 var ProjectSchema = new Schema({
   name: {
@@ -22,13 +23,12 @@ var ProjectSchema = new Schema({
     type: Date
   },
 
-  owner: {type: Schema.Types.ObjectId, ref: 'user'},
+  owner: {type: ObjectId, ref: 'user'},
 
-  notes: [{type: Schema.Types.ObjectId, ref: 'note'}],
-
-  todos: [{type: Schema.Types.ObjectId, ref: 'todo'}],
-
-  categories: [{type: Schema.Types.ObjectId, ref: 'category'}]
+  children: [{
+    kind: String,
+    item: { type: ObjectId, refPath: 'children.kind' }
+  }]
 });
 
 ProjectSchema.plugin(require('mongoose-paginate'));
