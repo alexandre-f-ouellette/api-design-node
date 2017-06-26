@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId
 
 var TodoSchema = new Schema({
   body: {
@@ -17,11 +16,9 @@ var TodoSchema = new Schema({
     default: false
   },
 
-  owner: {type: ObjectId, ref: 'user'},
+  owner: {type: Schema.Types.ObjectId, ref: 'user'},
 
-  project: {type: ObjectId, ref: 'project'},
-
-  notes: [{type: ObjectId, ref: 'note'}]
+  notes: [{type: Schema.Types.ObjectId, ref: 'note'}]
 
 });
 

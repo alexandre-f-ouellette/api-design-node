@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId
 
 var NoteSchema = new Schema({
   body: {
@@ -12,12 +11,7 @@ var NoteSchema = new Schema({
     type: String,
   },
 
-  owner: {type: Schema.Types.ObjectId, ref: 'user'},
-
-  parent: {
-    kind: String,
-    item: { type: ObjectId, refPath: 'parent.kind' }
-  }
+  owner: {type: Schema.Types.ObjectId, ref: 'user'}
 });
 
 module.exports = mongoose.model('note', NoteSchema);
